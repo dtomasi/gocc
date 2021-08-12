@@ -16,12 +16,6 @@ func getAllTestStrings() []string {
 	)
 }
 
-func checkErr(t *testing.T, result string, matches bool, message string) {
-	if !matches {
-		t.Errorf("conversion error: %s\n", message)
-	}
-}
-
 func TestSConverter_ToSnakeCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
 		assert.True(t, IsSnakeCase(C(testString).ToSnakeCase()))
