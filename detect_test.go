@@ -40,6 +40,14 @@ var (
 		"UPPER-KEBAB",
 		"UPPER-KEBAB-CASE",
 	}
+	testStringsDotNotation = []string{
+		"dot.notation",
+		"dot.notation.multi.words",
+	}
+	testStringsUpperDotNotation = []string{
+		"DOT.NOTATION",
+		"DOT.NOTATION.MULTI.WORDS",
+	}
 )
 
 func mergeSlices(args ...[]string) []string {
@@ -70,6 +78,8 @@ func TestIsSnakeCase(t *testing.T) {
 		testStringsCamelCase,
 		testStringsKebabCase,
 		testStringsUpperKebabCase,
+		testStringsDotNotation,
+		testStringsUpperDotNotation,
 	)
 
 	for _, testString := range invalidStrings {
@@ -89,6 +99,8 @@ func TestIsUpperSnakeCase(t *testing.T) {
 		testStringsCamelCase,
 		testStringsKebabCase,
 		testStringsUpperKebabCase,
+		testStringsDotNotation,
+		testStringsUpperDotNotation,
 	)
 
 	for _, testString := range invalidStrings {
@@ -108,6 +120,8 @@ func TestIsPascalCase(t *testing.T) {
 		testStringsCamelCase,
 		testStringsKebabCase,
 		testStringsUpperKebabCase,
+		testStringsDotNotation,
+		testStringsUpperDotNotation,
 	)
 	for _, testString := range invalidStrings {
 		assert.False(t, IsPascalCase(testString), testString)
@@ -126,6 +140,8 @@ func TestIsCamelCase(t *testing.T) {
 		testStringsPascalCase,
 		testStringsKebabCase,
 		testStringsUpperKebabCase,
+		testStringsDotNotation,
+		testStringsUpperDotNotation,
 	)
 
 	for _, testString := range invalidStrings {
@@ -145,6 +161,8 @@ func TestIsKebabCase(t *testing.T) {
 		testStringsPascalCase,
 		testStringsCamelCase,
 		testStringsUpperKebabCase,
+		testStringsDotNotation,
+		testStringsUpperDotNotation,
 	)
 
 	for _, testString := range invalidStrings {
@@ -164,9 +182,53 @@ func TestIsUpperKebabCase(t *testing.T) {
 		testStringsPascalCase,
 		testStringsCamelCase,
 		testStringsKebabCase,
+		testStringsDotNotation,
+		testStringsUpperDotNotation,
 	)
 
 	for _, testString := range invalidStrings {
 		assert.False(t, IsUpperKebabCase(testString), testString)
+	}
+}
+
+func TestIsDotNotation(t *testing.T) {
+
+	for _, testString := range testStringsDotNotation {
+		assert.True(t, IsDotNotation(testString), testString)
+	}
+
+	invalidStrings := mergeSlices(
+		testStringsSnakeCase,
+		testStringsUpperSnakeCase,
+		testStringsPascalCase,
+		testStringsCamelCase,
+		testStringsKebabCase,
+		testStringsUpperKebabCase,
+		testStringsUpperDotNotation,
+	)
+
+	for _, testString := range invalidStrings {
+		assert.False(t, IsDotNotation(testString), testString)
+	}
+}
+
+func TestIsUpperDotNotation(t *testing.T) {
+
+	for _, testString := range testStringsUpperDotNotation {
+		assert.True(t, IsUpperDotNotation(testString), testString)
+	}
+
+	invalidStrings := mergeSlices(
+		testStringsSnakeCase,
+		testStringsUpperSnakeCase,
+		testStringsPascalCase,
+		testStringsCamelCase,
+		testStringsKebabCase,
+		testStringsUpperKebabCase,
+		testStringsDotNotation,
+	)
+
+	for _, testString := range invalidStrings {
+		assert.False(t, IsUpperDotNotation(testString), testString)
 	}
 }

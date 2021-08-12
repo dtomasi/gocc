@@ -9,6 +9,8 @@ func toSnakeCase(s string) string {
 	switch detectCaseStyle(s) {
 	case StyleKebabCase, StyleUpperKebabCase:
 		return strings.ToLower(strings.ReplaceAll(s, "-", "_"))
+	case StyleDotNotation, StyleUpperDotNotation:
+		return strings.ToLower(strings.ReplaceAll(s, ".", "_"))
 	case StyleCamelCase, StylePascalCase:
 		return pascalOrCamelToSnakeCase(s)
 	case StyleUpperSnakeCase:

@@ -10,6 +10,8 @@ const (
 	StyleCamelCase
 	StyleKebabCase
 	StyleUpperKebabCase
+	StyleDotNotation
+	StyleUpperDotNotation
 )
 
 var styleStringMap = []string{
@@ -20,6 +22,8 @@ var styleStringMap = []string{
 	"camel",
 	"kebab",
 	"upper_kebab",
+	"dot_notation",
+	"upper_dot_notation",
 }
 
 func (cs CaseStyle) String() string {

@@ -51,3 +51,15 @@ func TestSConverter_ToUpperKebabCase(t *testing.T) {
 		assert.True(t, IsUpperKebabCase(C(testString).ToUpperKebabCase()))
 	}
 }
+
+func TestSConverter_ToDotNotation(t *testing.T) {
+	for _, testString := range getAllTestStrings() {
+		assert.True(t, IsDotNotation(C(testString).ToDotNotation()))
+	}
+}
+
+func TestSConverter_ToUpperDotNotation(t *testing.T) {
+	for _, testString := range getAllTestStrings() {
+		assert.True(t, IsUpperDotNotation(C(testString).ToUpperDotNotation()))
+	}
+}
