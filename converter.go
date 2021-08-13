@@ -21,54 +21,84 @@ func (c *Converter) Style() CaseStyle {
 	return detectCaseStyle(c.s)
 }
 
+// Convert converts from -> to given types. This function is more performant than the case/format detection
+// on other convert functions
+func (c *Converter) Convert(from CaseStyle, to CaseStyle) string {
+	switch to {
+	case StylePascalCase:
+		return toPascalCaseFromCaseStyle(from, c.s)
+	case StyleCamelCase:
+		return toCamelCaseFromCaseStyle(from, c.s)
+	case StyleSnakeCase:
+		return toSnakeCaseFromCaseStyle(from, c.s)
+	case StyleUpperSnakeCase:
+		return strings.ToUpper(toSnakeCaseFromCaseStyle(from, c.s))
+	case StyleKebabCase:
+		return toKebabCaseFromCaseStyle(from, c.s)
+	case StyleUpperKebabCase:
+		return strings.ToUpper(toKebabCaseFromCaseStyle(from, c.s))
+	case StyleDotNotation:
+		return toDotNotationFromCaseStyle(from, c.s)
+	case StyleUpperDotNotation:
+		return strings.ToUpper(toDotNotationFromCaseStyle(from, c.s))
+	}
+
+	return c.s
+}
+
+// ConvertCustomDelimiter converts given case style to custom delimiter separated format
+func (c *Converter) ConvertCustomDelimiter(from CaseStyle, delimiter string) string {
+	return toCustomDelimiterFromCaseStyle(from, c.s, delimiter)
+}
+
 // ToSnakeCase converts the string value of Converter to a snake case string
 func (c *Converter) ToSnakeCase() string {
-	return toCustomDelimiter(c.s, DelimiterSnakeCase)
+	return c.Convert(c.Style(), StyleSnakeCase)
 }
 
 // ToUpperSnakeCase converts the string value of Converter to a upper snake case string
 func (c *Converter) ToUpperSnakeCase() string {
-	return strings.ToUpper(toCustomDelimiter(c.s, DelimiterSnakeCase))
+	return c.Convert(c.Style(), StyleUpperSnakeCase)
 }
 
 // ToPascalCase converts the string value of Converter to a pascal case string
 func (c *Converter) ToPascalCase() string {
-	return toPascalCase(c.s)
+	return c.Convert(c.Style(), StylePascalCase)
 }
 
 // ToCamelCase converts the string value of Converter to a camel case string
 func (c *Converter) ToCamelCase() string {
-	return toCamelCase(c.s)
+	return c.Convert(c.Style(), StyleCamelCase)
 }
 
 // ToKebabCase converts the string value of Converter to a kebab case string
 func (c *Converter) ToKebabCase() string {
-	return toCustomDelimiter(c.s, DelimiterKebabCase)
+	return c.Convert(c.Style(), StyleKebabCase)
 }
 
 // ToUpperKebabCase converts the string value of Converter to a upper kebab case string
 func (c *Converter) ToUpperKebabCase() string {
-	return strings.ToUpper(toCustomDelimiter(c.s, DelimiterKebabCase))
+	return c.Convert(c.Style(), StyleUpperKebabCase)
 }
 
 // ToDotNotation converts the string value of Converter to a kebab case string
 func (c *Converter) ToDotNotation() string {
-	return toCustomDelimiter(c.s, DelimiterDotNotation)
+	return c.Convert(c.Style(), StyleDotNotation)
 }
 
 // ToUpperDotNotation converts the string value of Converter to a upper kebab case string
 func (c *Converter) ToUpperDotNotation() string {
-	return strings.ToUpper(toCustomDelimiter(c.s, DelimiterDotNotation))
+	return c.Convert(c.Style(), StyleUpperDotNotation)
 }
 
 // ToCustomDelimiter converts the string to a string separated by given delimiter
 func (c *Converter) ToCustomDelimiter(delimiter string) string {
-	return toCustomDelimiter(c.s, delimiter)
+	return c.ConvertCustomDelimiter(c.Style(), delimiter)
 }
 
 // ToUpperCustomDelimiter converts the string to a string separated by given delimiter in upper case
 func (c *Converter) ToUpperCustomDelimiter(delimiter string) string {
-	return strings.ToUpper(toCustomDelimiter(c.s, delimiter))
+	return strings.ToUpper(c.ConvertCustomDelimiter(c.Style(), delimiter))
 }
 
 // IsSnakeCase detects if a string is snake case style
