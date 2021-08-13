@@ -7,7 +7,7 @@ import (
 // C returns a new Converter instance
 func C(s string) *Converter {
 	return &Converter{
-		s: s,
+		s: strings.TrimSpace(s),
 	}
 }
 
@@ -23,12 +23,12 @@ func (c *Converter) Style() CaseStyle {
 
 // ToSnakeCase converts the string value of Converter to a snake case string
 func (c *Converter) ToSnakeCase() string {
-	return toSnakeCase(c.s)
+	return toCustomDelimiter(c.s, DelimiterSnakeCase)
 }
 
 // ToUpperSnakeCase converts the string value of Converter to a upper snake case string
 func (c *Converter) ToUpperSnakeCase() string {
-	return strings.ToUpper(toSnakeCase(c.s))
+	return strings.ToUpper(toCustomDelimiter(c.s, DelimiterSnakeCase))
 }
 
 // ToPascalCase converts the string value of Converter to a pascal case string
@@ -43,22 +43,32 @@ func (c *Converter) ToCamelCase() string {
 
 // ToKebabCase converts the string value of Converter to a kebab case string
 func (c *Converter) ToKebabCase() string {
-	return toKebabCase(c.s)
+	return toCustomDelimiter(c.s, DelimiterKebabCase)
 }
 
 // ToUpperKebabCase converts the string value of Converter to a upper kebab case string
 func (c *Converter) ToUpperKebabCase() string {
-	return strings.ToUpper(toKebabCase(c.s))
+	return strings.ToUpper(toCustomDelimiter(c.s, DelimiterKebabCase))
 }
 
 // ToDotNotation converts the string value of Converter to a kebab case string
 func (c *Converter) ToDotNotation() string {
-	return toDotNotation(c.s)
+	return toCustomDelimiter(c.s, DelimiterDotNotation)
 }
 
 // ToUpperDotNotation converts the string value of Converter to a upper kebab case string
 func (c *Converter) ToUpperDotNotation() string {
-	return strings.ToUpper(toDotNotation(c.s))
+	return strings.ToUpper(toCustomDelimiter(c.s, DelimiterDotNotation))
+}
+
+// ToCustomDelimiter converts the string to a string separated by given delimiter
+func (c *Converter) ToCustomDelimiter(delimiter string) string {
+	return toCustomDelimiter(c.s, delimiter)
+}
+
+// ToUpperCustomDelimiter converts the string to a string separated by given delimiter in upper case
+func (c *Converter) ToUpperCustomDelimiter(delimiter string) string {
+	return strings.ToUpper(toCustomDelimiter(c.s, delimiter))
 }
 
 // IsSnakeCase detects if a string is snake case style
@@ -99,4 +109,14 @@ func (c *Converter) IsDotNotation() bool {
 // IsUpperDotNotation detects if a string is upper dot notation style
 func (c *Converter) IsUpperDotNotation() bool {
 	return IsUpperDotNotation(c.s)
+}
+
+// IsCustomDelimiter detects if a string is separated by a given custom delimiter
+func (c *Converter) IsCustomDelimiter(delimiter string) bool {
+	return IsCustomDelimiter(c.s, delimiter)
+}
+
+// IsUpperCustomDelimiter detects if a string is separated by a given custom delimiter as upper case string
+func (c *Converter) IsUpperCustomDelimiter(delimiter string) bool {
+	return IsUpperCustomDelimiter(c.s, delimiter)
 }

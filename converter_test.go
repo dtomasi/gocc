@@ -1,9 +1,12 @@
 package gocc
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
+
+var testCustomDelimiters = []string{`|`, `*`, `+`, `?`, `^`, `$`, `/`, `\`}
 
 func getAllTestStrings() []string {
 	return mergeSlices(
@@ -13,53 +16,84 @@ func getAllTestStrings() []string {
 		testStringsCamelCase,
 		testStringsKebabCase,
 		testStringsUpperKebabCase,
+		testStringsDotNotation,
+		testStringsUpperDotNotation,
 	)
 }
 
 func TestSConverter_ToSnakeCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsSnakeCase(C(testString).ToSnakeCase()))
+		assert.True(t, IsSnakeCase(C(testString).ToSnakeCase()), testString)
 	}
 }
 
 func TestSConverter_ToUpperSnakeCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsUpperSnakeCase(C(testString).ToUpperSnakeCase()))
+		assert.True(t, IsUpperSnakeCase(C(testString).ToUpperSnakeCase()), testString)
 	}
 }
 
 func TestSConverter_ToPascalCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsPascalCase(C(testString).ToPascalCase()))
+		assert.True(t, IsPascalCase(C(testString).ToPascalCase()), testString)
 	}
 }
 
 func TestSConverter_ToCamelCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsCamelCase(C(testString).ToCamelCase()))
+		assert.True(t, IsCamelCase(C(testString).ToCamelCase()), testString)
 	}
 }
 
 func TestSConverter_ToKebabCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsKebabCase(C(testString).ToKebabCase()))
+		assert.True(t, IsKebabCase(C(testString).ToKebabCase()), testString)
 	}
 }
 
 func TestSConverter_ToUpperKebabCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsUpperKebabCase(C(testString).ToUpperKebabCase()))
+		assert.True(t, IsUpperKebabCase(C(testString).ToUpperKebabCase()), testString)
 	}
 }
 
 func TestSConverter_ToDotNotation(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsDotNotation(C(testString).ToDotNotation()))
+		assert.True(t, IsDotNotation(C(testString).ToDotNotation()), testString)
 	}
 }
 
 func TestSConverter_ToUpperDotNotation(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsUpperDotNotation(C(testString).ToUpperDotNotation()))
+		assert.True(t, IsUpperDotNotation(C(testString).ToUpperDotNotation()), testString)
+	}
+}
+
+func TestConverter_ToCustomDelimiter(t *testing.T) {
+
+	for _, delimiter := range testCustomDelimiters {
+		for _, testString := range getAllTestStrings() {
+			assert.True(t,
+				IsCustomDelimiter(
+					C(testString).ToCustomDelimiter(delimiter),
+					delimiter,
+				),
+				fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
+			)
+		}
+	}
+}
+
+func TestConverter_ToUpperCustomDelimiter(t *testing.T) {
+	for _, delimiter := range testCustomDelimiters {
+		for _, testString := range getAllTestStrings() {
+			assert.True(t,
+				IsUpperCustomDelimiter(
+					C(testString).ToUpperCustomDelimiter(delimiter),
+					delimiter,
+				),
+				fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
+			)
+		}
 	}
 }

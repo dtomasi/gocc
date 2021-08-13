@@ -1,19 +1,23 @@
 package gocc
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
+	"strings"
 	"testing"
 )
 
 var (
 	testStyleMapping = map[CaseStyle]string{
-		StyleInvalid:        "in-va_lid",
-		StyleSnakeCase:      "snake_case",
-		StyleUpperSnakeCase: "UPPER_SNAKE_CASE",
-		StylePascalCase:     "PascalCase",
-		StyleCamelCase:      "camelCase",
-		StyleKebabCase:      "kebab-case",
-		StyleUpperKebabCase: "UPPER-KEBAB-CASE",
+		StyleUnknown:          "in-va_lid",
+		StyleSnakeCase:        "snake_case",
+		StyleUpperSnakeCase:   "UPPER_SNAKE_CASE",
+		StylePascalCase:       "PascalCase",
+		StyleCamelCase:        "camelCase",
+		StyleKebabCase:        "kebab-case",
+		StyleUpperKebabCase:   "UPPER-KEBAB-CASE",
+		StyleDotNotation:      "dot.notation",
+		StyleUpperDotNotation: "UPPER.DOT.NOTATION",
 	}
 
 	testStringsSnakeCase = []string{
@@ -62,7 +66,7 @@ func mergeSlices(args ...[]string) []string {
 func TestDetectCaseStyle(t *testing.T) {
 
 	for caseStyle, testString := range testStyleMapping {
-		assert.Equal(t, caseStyle, detectCaseStyle(testString))
+		assert.Equal(t, caseStyle, detectCaseStyle(testString), fmt.Sprintf("Case Style: %s | test string %s", caseStyle, testString))
 	}
 }
 
@@ -230,5 +234,69 @@ func TestIsUpperDotNotation(t *testing.T) {
 
 	for _, testString := range invalidStrings {
 		assert.False(t, IsUpperDotNotation(testString), testString)
+	}
+}
+
+func TestIsCustomDelimiter(t *testing.T) {
+
+	templateString := "custom delimiter test"
+	for _, delimiter := range testCustomDelimiters {
+		testString := strings.ReplaceAll(templateString, " ", delimiter)
+		assert.True(t,
+			IsCustomDelimiter(testString, delimiter),
+			fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
+		)
+	}
+
+	invalidStrings := mergeSlices(
+		testStringsSnakeCase,
+		testStringsUpperSnakeCase,
+		testStringsPascalCase,
+		testStringsCamelCase,
+		testStringsKebabCase,
+		testStringsUpperKebabCase,
+		testStringsDotNotation,
+		testStringsUpperDotNotation,
+	)
+
+	for _, delimiter := range testCustomDelimiters {
+		for _, testString := range invalidStrings {
+			assert.False(t,
+				IsCustomDelimiter(testString, delimiter),
+				fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
+			)
+		}
+	}
+}
+
+func TestIsUpperCustomDelimiter(t *testing.T) {
+
+	templateString := "CUSTOM DELIMITER TEST"
+	for _, delimiter := range testCustomDelimiters {
+		testString := strings.ReplaceAll(templateString, " ", delimiter)
+		assert.True(t,
+			IsUpperCustomDelimiter(testString, delimiter),
+			fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
+		)
+	}
+
+	invalidStrings := mergeSlices(
+		testStringsSnakeCase,
+		testStringsUpperSnakeCase,
+		testStringsPascalCase,
+		testStringsCamelCase,
+		testStringsKebabCase,
+		testStringsUpperKebabCase,
+		testStringsDotNotation,
+		testStringsUpperDotNotation,
+	)
+
+	for _, delimiter := range testCustomDelimiters {
+		for _, testString := range invalidStrings {
+			assert.False(t,
+				IsUpperCustomDelimiter(testString, delimiter),
+				fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
+			)
+		}
 	}
 }
