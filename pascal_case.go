@@ -9,7 +9,7 @@ import (
 func toPascalCaseFromCaseStyle(from CaseStyle, s string) string {
 
 	switch from {
-	case StylePascalCase:
+	case StyleCamelCase:
 		return ucFirst(s)
 	case StyleSnakeCase, StyleUpperSnakeCase:
 		return customDelimiterToPascalCase(s, DelimiterSnakeCase)
@@ -29,7 +29,7 @@ func customDelimiterToPascalCase(s string, delimiter string) string {
 	}
 	regexString := fmt.Sprintf(`(^[A-Za-z])|%s([A-Za-z])`, regexDelimiter)
 	var r = regexp.MustCompile(regexString)
-	return r.ReplaceAllStringFunc(s, func(s string) string {
+	return r.ReplaceAllStringFunc(strings.ToLower(s), func(s string) string {
 		return strings.ToUpper(strings.Replace(s, delimiter, "", -1))
 	})
 }

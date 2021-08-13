@@ -13,7 +13,7 @@ func toKebabCaseFromCaseStyle(from CaseStyle, s string) string {
 	case StyleDotNotation, StyleUpperDotNotation:
 		return dotNotationToKebabCase(s)
 	case StyleUpperKebabCase:
-		return strings.ToUpper(s)
+		return strings.ToLower(s)
 	}
 
 	return s

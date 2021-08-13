@@ -8,7 +8,7 @@ import (
 func toCustomDelimiterFromCaseStyle(from CaseStyle, s string, delimiter string) string {
 	switch from {
 	case StylePascalCase, StyleCamelCase:
-		pascalOrCamelToCustomDelimiter(s, delimiter)
+		return pascalOrCamelToCustomDelimiter(s, delimiter)
 	case StyleSnakeCase, StyleUpperSnakeCase:
 		return strings.ToLower(strings.ReplaceAll(s, DelimiterSnakeCase, delimiter))
 	case StyleKebabCase, StyleUpperKebabCase:

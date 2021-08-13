@@ -4,7 +4,7 @@ func toCamelCaseFromCaseStyle(from CaseStyle, s string) string {
 
 	switch from {
 	case StylePascalCase:
-		return ucFirst(s)
+		return lcFirst(s)
 	case StyleSnakeCase, StyleUpperSnakeCase:
 		return customDelimiterToCamelCase(s, DelimiterSnakeCase)
 	case StyleKebabCase, StyleUpperKebabCase:

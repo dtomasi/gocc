@@ -73,12 +73,13 @@ func TestConverter_ToCustomDelimiter(t *testing.T) {
 
 	for _, delimiter := range testCustomDelimiters {
 		for _, testString := range getAllTestStrings() {
+			testResultString := C(testString).ToCustomDelimiter(delimiter)
 			assert.True(t,
 				IsCustomDelimiter(
-					C(testString).ToCustomDelimiter(delimiter),
+					testResultString,
 					delimiter,
 				),
-				fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
+				fmt.Sprintf("delimiter: %s | test string: %s | test result string: %s", delimiter, testString, testResultString),
 			)
 		}
 	}

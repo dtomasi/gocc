@@ -13,7 +13,7 @@ func toSnakeCaseFromCaseStyle(from CaseStyle, s string) string {
 	case StyleDotNotation, StyleUpperDotNotation:
 		return dotNotationToSnakeCase(s)
 	case StyleUpperSnakeCase:
-		return strings.ToUpper(s)
+		return strings.ToLower(s)
 	}
 
 	return s
