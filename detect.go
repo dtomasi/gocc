@@ -10,36 +10,44 @@ import (
 func detectCaseStyle(s string) CaseStyle {
 
 	switch true {
-	case IsSnakeCase(s):
-		return StyleSnakeCase
-	case IsUpperSnakeCase(s):
-		return StyleUpperSnakeCase
 	case IsPascalCase(s):
 		return StylePascalCase
 	case IsCamelCase(s):
 		return StyleCamelCase
-	case IsKebabCase(s):
+	}
+
+	delimiter, found := detectDelimitedString(s)
+	if !found {
+		return StyleUnknown
+	}
+
+	switch delimiter {
+	case DelimiterSnakeCase:
+		return StyleSnakeCase
+	case DelimiterKebabCase:
 		return StyleKebabCase
-	case IsUpperKebabCase(s):
-		return StyleUpperKebabCase
-	case IsDotNotation(s):
+	case DelimiterDotNotation:
 		return StyleDotNotation
-	case IsUpperDotNotation(s):
-		return StyleUpperDotNotation
 	}
 
 	return StyleUnknown
 }
 
+func detectDelimitedString(s string) (string, bool) {
+	r := regexp.MustCompile(regexDelimiterDetection)
+	subMatch := r.FindStringSubmatch(s)
+	if len(subMatch) > 0 {
+		// this is a required validation step to check if a string only contains detected delimiter
+		if IsCustomDelimiter(s, subMatch[1]) {
+			return subMatch[1], true
+		}
+	}
+	return "", false
+}
+
 // IsSnakeCase detects if a string is snake case style
 func IsSnakeCase(s string) bool {
 	r := regexp.MustCompile(regexCheckSnackCase)
-	return r.MatchString(strings.TrimSpace(s))
-}
-
-// IsUpperSnakeCase detects if a string is snake case style
-func IsUpperSnakeCase(s string) bool {
-	r := regexp.MustCompile(regexCheckUpperSnakeCase)
 	return r.MatchString(strings.TrimSpace(s))
 }
 
@@ -61,21 +69,9 @@ func IsKebabCase(s string) bool {
 	return r.MatchString(strings.TrimSpace(s))
 }
 
-// IsUpperKebabCase detects if a string is kebab case style
-func IsUpperKebabCase(s string) bool {
-	r := regexp.MustCompile(regexCheckUpperKebabCase)
-	return r.MatchString(strings.TrimSpace(s))
-}
-
 // IsDotNotation detects if a string is dot notation style
 func IsDotNotation(s string) bool {
 	r := regexp.MustCompile(regexCheckDotNotation)
-	return r.MatchString(strings.TrimSpace(s))
-}
-
-// IsUpperDotNotation detects if a string is upper dot notation style
-func IsUpperDotNotation(s string) bool {
-	r := regexp.MustCompile(regexCheckUpperDotNotation)
 	return r.MatchString(strings.TrimSpace(s))
 }
 

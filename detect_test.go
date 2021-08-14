@@ -11,13 +11,10 @@ var (
 	testStyleMapping = map[CaseStyle]string{
 		StyleUnknown:          "in-va_lid",
 		StyleSnakeCase:        "snake_case",
-		StyleUpperSnakeCase:   "UPPER_SNAKE_CASE",
 		StylePascalCase:       "PascalCase",
 		StyleCamelCase:        "camelCase",
 		StyleKebabCase:        "kebab-case",
-		StyleUpperKebabCase:   "UPPER-KEBAB-CASE",
 		StyleDotNotation:      "dot.notation",
-		StyleUpperDotNotation: "UPPER.DOT.NOTATION",
 	}
 
 	testStringsSnakeCase = []string{
@@ -91,27 +88,6 @@ func TestIsSnakeCase(t *testing.T) {
 	}
 }
 
-func TestIsUpperSnakeCase(t *testing.T) {
-
-	for _, testString := range testStringsUpperSnakeCase {
-		assert.True(t, IsUpperSnakeCase(testString), testString)
-	}
-
-	invalidStrings := mergeSlices(
-		testStringsSnakeCase,
-		testStringsPascalCase,
-		testStringsCamelCase,
-		testStringsKebabCase,
-		testStringsUpperKebabCase,
-		testStringsDotNotation,
-		testStringsUpperDotNotation,
-	)
-
-	for _, testString := range invalidStrings {
-		assert.False(t, IsUpperSnakeCase(testString), testString)
-	}
-}
-
 func TestIsPascalCase(t *testing.T) {
 
 	for _, testString := range testStringsPascalCase {
@@ -174,27 +150,6 @@ func TestIsKebabCase(t *testing.T) {
 	}
 }
 
-func TestIsUpperKebabCase(t *testing.T) {
-
-	for _, testString := range testStringsUpperKebabCase {
-		assert.True(t, IsUpperKebabCase(testString), testString)
-	}
-
-	invalidStrings := mergeSlices(
-		testStringsSnakeCase,
-		testStringsUpperSnakeCase,
-		testStringsPascalCase,
-		testStringsCamelCase,
-		testStringsKebabCase,
-		testStringsDotNotation,
-		testStringsUpperDotNotation,
-	)
-
-	for _, testString := range invalidStrings {
-		assert.False(t, IsUpperKebabCase(testString), testString)
-	}
-}
-
 func TestIsDotNotation(t *testing.T) {
 
 	for _, testString := range testStringsDotNotation {
@@ -213,27 +168,6 @@ func TestIsDotNotation(t *testing.T) {
 
 	for _, testString := range invalidStrings {
 		assert.False(t, IsDotNotation(testString), testString)
-	}
-}
-
-func TestIsUpperDotNotation(t *testing.T) {
-
-	for _, testString := range testStringsUpperDotNotation {
-		assert.True(t, IsUpperDotNotation(testString), testString)
-	}
-
-	invalidStrings := mergeSlices(
-		testStringsSnakeCase,
-		testStringsUpperSnakeCase,
-		testStringsPascalCase,
-		testStringsCamelCase,
-		testStringsKebabCase,
-		testStringsUpperKebabCase,
-		testStringsDotNotation,
-	)
-
-	for _, testString := range invalidStrings {
-		assert.False(t, IsUpperDotNotation(testString), testString)
 	}
 }
 
@@ -298,5 +232,35 @@ func TestIsUpperCustomDelimiter(t *testing.T) {
 				fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
 			)
 		}
+	}
+}
+
+func Benchmark_detectCaseStyle_SnakeCase(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		detectCaseStyle(testStringsSnakeCase[0])
+	}
+}
+
+func Benchmark_detectCaseStyle_KebabCase(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		detectCaseStyle(testStringsKebabCase[0])
+	}
+}
+
+func Benchmark_detectCaseStyle_CamelCase(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		detectCaseStyle(testStringsCamelCase[0])
+	}
+}
+
+func Benchmark_detectCaseStyle_PascalCase(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		detectCaseStyle(testStringsPascalCase[0])
+	}
+}
+
+func Benchmark_detectCaseStyle_DotNotation(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		detectCaseStyle(testStringsDotNotation[0])
 	}
 }

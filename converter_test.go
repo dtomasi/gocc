@@ -11,13 +11,10 @@ var testCustomDelimiters = []string{`|`, `*`, `+`, `?`, `^`, `$`, `/`, `\`}
 func getAllTestStrings() []string {
 	return mergeSlices(
 		testStringsSnakeCase,
-		testStringsUpperSnakeCase,
 		testStringsPascalCase,
 		testStringsCamelCase,
 		testStringsKebabCase,
-		testStringsUpperKebabCase,
 		testStringsDotNotation,
-		testStringsUpperDotNotation,
 	)
 }
 
@@ -27,9 +24,52 @@ func TestSConverter_ToSnakeCase(t *testing.T) {
 	}
 }
 
-func TestSConverter_ToUpperSnakeCase(t *testing.T) {
-	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsUpperSnakeCase(C(testString).ToUpperSnakeCase()), testString)
+func BenchmarkConverter_PascalCase_ToSnakeCase_with_style_detection(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		C(testStringsPascalCase[1]).ToSnakeCase()
+	}
+}
+
+func BenchmarkConverter_PascalCase_ToSnakeCase_with_known_style(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		C(testStringsPascalCase[1]).Convert(StylePascalCase, StyleSnakeCase)
+	}
+}
+
+func BenchmarkConverter_CamelCase_ToSnakeCase_with_style_detection(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		C(testStringsCamelCase[1]).ToSnakeCase()
+	}
+}
+
+func BenchmarkConverter_CamelCase_ToSnakeCase_with_known_style(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		C(testStringsCamelCase[1]).Convert(StyleCamelCase, StyleSnakeCase)
+	}
+}
+
+func BenchmarkConverter_KebabCase_ToSnakeCase_with_style_detection(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		C(testStringsKebabCase[1]).ToSnakeCase()
+	}
+}
+
+func BenchmarkConverter_KebabCase_ToSnakeCase_with_known_style(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		C(testStringsKebabCase[1]).Convert(StyleKebabCase, StyleSnakeCase)
+	}
+}
+
+
+func BenchmarkConverter_DotNotation_ToSnakeCase_with_style_detection(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		C(testStringsDotNotation[1]).ToSnakeCase()
+	}
+}
+
+func BenchmarkConverter_DotNotation_ToSnakeCase_with_known_style(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		C(testStringsDotNotation[1]).Convert(StyleDotNotation, StyleSnakeCase)
 	}
 }
 
@@ -51,21 +91,9 @@ func TestSConverter_ToKebabCase(t *testing.T) {
 	}
 }
 
-func TestSConverter_ToUpperKebabCase(t *testing.T) {
-	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsUpperKebabCase(C(testString).ToUpperKebabCase()), testString)
-	}
-}
-
 func TestSConverter_ToDotNotation(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
 		assert.True(t, IsDotNotation(C(testString).ToDotNotation()), testString)
-	}
-}
-
-func TestSConverter_ToUpperDotNotation(t *testing.T) {
-	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsUpperDotNotation(C(testString).ToUpperDotNotation()), testString)
 	}
 }
 
@@ -88,12 +116,13 @@ func TestConverter_ToCustomDelimiter(t *testing.T) {
 func TestConverter_ToUpperCustomDelimiter(t *testing.T) {
 	for _, delimiter := range testCustomDelimiters {
 		for _, testString := range getAllTestStrings() {
+			testResultString := C(testString).ToUpperCustomDelimiter(delimiter)
 			assert.True(t,
 				IsUpperCustomDelimiter(
-					C(testString).ToUpperCustomDelimiter(delimiter),
+					testResultString,
 					delimiter,
 				),
-				fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
+				fmt.Sprintf("delimiter: %s | test string: %s | test result string: %s", delimiter, testString, testResultString),
 			)
 		}
 	}

@@ -9,11 +9,11 @@ func toCustomDelimiterFromCaseStyle(from CaseStyle, s string, delimiter string) 
 	switch from {
 	case StylePascalCase, StyleCamelCase:
 		return pascalOrCamelToCustomDelimiter(s, delimiter)
-	case StyleSnakeCase, StyleUpperSnakeCase:
+	case StyleSnakeCase:
 		return strings.ToLower(strings.ReplaceAll(s, DelimiterSnakeCase, delimiter))
-	case StyleKebabCase, StyleUpperKebabCase:
+	case StyleKebabCase:
 		return strings.ToLower(strings.ReplaceAll(s, DelimiterKebabCase, delimiter))
-	case StyleDotNotation, StyleUpperDotNotation:
+	case StyleDotNotation:
 		return strings.ToLower(strings.ReplaceAll(s, DelimiterDotNotation, delimiter))
 	}
 

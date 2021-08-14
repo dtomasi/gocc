@@ -8,12 +8,10 @@ func toSnakeCaseFromCaseStyle(from CaseStyle, s string) string {
 
 	case StylePascalCase, StyleCamelCase:
 		return pascalOrCamelCaseToSnakeCase(s)
-	case StyleKebabCase, StyleUpperKebabCase:
+	case StyleKebabCase:
 		return kebabCaseToSnakeCase(s)
-	case StyleDotNotation, StyleUpperDotNotation:
+	case StyleDotNotation:
 		return dotNotationToSnakeCase(s)
-	case StyleUpperSnakeCase:
-		return strings.ToLower(s)
 	}
 
 	return s

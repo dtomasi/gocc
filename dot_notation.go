@@ -8,12 +8,10 @@ func toDotNotationFromCaseStyle(from CaseStyle, s string) string {
 
 	case StylePascalCase, StyleCamelCase:
 		return pascalOrCamelCaseToDotNotation(s)
-	case StyleKebabCase, StyleUpperKebabCase:
+	case StyleKebabCase:
 		return kebabCaseToDotNotation(s)
-	case StyleSnakeCase, StyleUpperSnakeCase:
+	case StyleSnakeCase:
 		return snakeCaseToDotNotation(s)
-	case StyleUpperDotNotation:
-		return strings.ToLower(s)
 	}
 
 	return s

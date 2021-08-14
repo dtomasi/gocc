@@ -9,9 +9,6 @@ const (
 	StyleSnakeCase
 	StyleKebabCase
 	StyleDotNotation
-	StyleUpperSnakeCase
-	StyleUpperKebabCase
-	StyleUpperDotNotation
 )
 
 var styleStringMap = []string{
@@ -21,9 +18,6 @@ var styleStringMap = []string{
 	"snake",
 	"kebab",
 	"dot_notation",
-	"upper_snake",
-	"upper_kebab",
-	"upper_dot_notation",
 }
 
 func (cs CaseStyle) String() string {
