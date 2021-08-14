@@ -23,15 +23,3 @@ var styleStringMap = []string{
 func (cs CaseStyle) String() string {
 	return styleStringMap[cs]
 }
-
-func (cs CaseStyle) IsCaseSensitiveStyle() bool {
-	return cs > 0 && cs <= 2
-}
-
-func (cs CaseStyle) IsLowerStyle() bool {
-	return cs <= 5 && cs > 2
-}
-
-func (cs CaseStyle) IsUpperStyle() bool {
-	return cs > 5
-}
