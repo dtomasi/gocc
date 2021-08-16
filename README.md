@@ -24,7 +24,13 @@ import (
 
 func func main() {
     // Convert string to snake case -> returns "my_camel_case_string"
+    // Input case style is automatically detected
     gocc.C("myCamelCaseString").ToSnakeCase()
+
+    // Convert with known input type
+    // Using Convert function with known type is much faster than the example above,
+    // because there is no need to detect the input type
+    gocc.C("myCamelCaseString").Convert(gocc.StyleCamelCase, gocc.StyleSnakeCase)
     
     // Validate strings -> returns true
     gocc.IsSnakeCase("my_snake_case_string")
