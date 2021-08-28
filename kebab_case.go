@@ -4,8 +4,10 @@ import "strings"
 
 func toKebabCaseFromCaseStyle(from CaseStyle, s string) string {
 	switch from {
-	case StyleUnknown, StyleKebabCase:
+	case StyleUnknown:
 		panic("cannot convert from StyleUnknown or same as input style")
+	case StyleKebabCase:
+		return s
 	case StylePascalCase, StyleCamelCase:
 		return pascalOrCamelCaseToKebabCase(s)
 	case StyleSnakeCase:

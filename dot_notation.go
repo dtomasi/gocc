@@ -4,8 +4,10 @@ import "strings"
 
 func toDotNotationFromCaseStyle(from CaseStyle, s string) string {
 	switch from {
-	case StyleUnknown, StyleDotNotation:
+	case StyleUnknown:
 		panic("cannot convert from StyleUnknown or same as input style")
+	case StyleDotNotation:
+		return s
 	case StylePascalCase, StyleCamelCase:
 		return pascalOrCamelCaseToDotNotation(s)
 	case StyleKebabCase:

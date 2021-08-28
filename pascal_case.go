@@ -8,8 +8,10 @@ import (
 
 func toPascalCaseFromCaseStyle(from CaseStyle, s string) string {
 	switch from {
-	case StyleUnknown, StylePascalCase:
+	case StyleUnknown:
 		panic("cannot convert from StyleUnknown or same as input style")
+	case StylePascalCase:
+		return s
 	case StyleCamelCase:
 		return ucFirst(s)
 	case StyleSnakeCase:

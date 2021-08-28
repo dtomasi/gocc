@@ -26,7 +26,7 @@ func (c *Converter) Style() CaseStyle {
 func (c *Converter) Convert(from CaseStyle, to CaseStyle) string {
 	switch to {
 	case StyleUnknown:
-		panic("cannot convert from StyleUnknown")
+		return c.s
 	case StylePascalCase:
 		return toPascalCaseFromCaseStyle(from, c.s)
 	case StyleCamelCase:
