@@ -1,20 +1,21 @@
-package gocc
+package gocc_test
 
 import (
 	"fmt"
+	"github.com/dtomasi/gocc"
 	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
 )
 
 var (
-	testStyleMapping = map[CaseStyle]string{
-		StyleUnknown:          "in-va_lid",
-		StyleSnakeCase:        "snake_case",
-		StylePascalCase:       "PascalCase",
-		StyleCamelCase:        "camelCase",
-		StyleKebabCase:        "kebab-case",
-		StyleDotNotation:      "dot.notation",
+	testStyleMapping = map[gocc.CaseStyle]string{
+		gocc.StyleUnknown:     "in-va_lid",
+		gocc.StyleSnakeCase:   "snake_case",
+		gocc.StylePascalCase:  "PascalCase",
+		gocc.StyleCamelCase:   "camelCase",
+		gocc.StyleKebabCase:   "kebab-case",
+		gocc.StyleDotNotation: "dot.notation",
 	}
 
 	testStringsSnakeCase = []string{
@@ -61,16 +62,18 @@ func mergeSlices(args ...[]string) []string {
 }
 
 func TestDetectCaseStyle(t *testing.T) {
-
 	for caseStyle, testString := range testStyleMapping {
-		assert.Equal(t, caseStyle, detectCaseStyle(testString), fmt.Sprintf("Case Style: %s | test string %s", caseStyle, testString))
+		assert.Equal(t,
+			caseStyle,
+			gocc.DetectCaseStyle(testString),
+			fmt.Sprintf("Case Style: %s | test string %s", caseStyle, testString),
+		)
 	}
 }
 
 func TestIsSnakeCase(t *testing.T) {
-
 	for _, testString := range testStringsSnakeCase {
-		assert.True(t, IsSnakeCase(testString))
+		assert.True(t, gocc.IsSnakeCase(testString))
 	}
 
 	invalidStrings := mergeSlices(
@@ -84,14 +87,13 @@ func TestIsSnakeCase(t *testing.T) {
 	)
 
 	for _, testString := range invalidStrings {
-		assert.False(t, IsSnakeCase(testString), testString)
+		assert.False(t, gocc.IsSnakeCase(testString), testString)
 	}
 }
 
 func TestIsPascalCase(t *testing.T) {
-
 	for _, testString := range testStringsPascalCase {
-		assert.True(t, IsPascalCase(testString), testString)
+		assert.True(t, gocc.IsPascalCase(testString), testString)
 	}
 
 	invalidStrings := mergeSlices(
@@ -104,14 +106,13 @@ func TestIsPascalCase(t *testing.T) {
 		testStringsUpperDotNotation,
 	)
 	for _, testString := range invalidStrings {
-		assert.False(t, IsPascalCase(testString), testString)
+		assert.False(t, gocc.IsPascalCase(testString), testString)
 	}
 }
 
 func TestIsCamelCase(t *testing.T) {
-
 	for _, testString := range testStringsCamelCase {
-		assert.True(t, IsCamelCase(testString), testString)
+		assert.True(t, gocc.IsCamelCase(testString), testString)
 	}
 
 	invalidStrings := mergeSlices(
@@ -125,14 +126,13 @@ func TestIsCamelCase(t *testing.T) {
 	)
 
 	for _, testString := range invalidStrings {
-		assert.False(t, IsCamelCase(testString), testString)
+		assert.False(t, gocc.IsCamelCase(testString), testString)
 	}
 }
 
 func TestIsKebabCase(t *testing.T) {
-
 	for _, testString := range testStringsKebabCase {
-		assert.True(t, IsKebabCase(testString), testString)
+		assert.True(t, gocc.IsKebabCase(testString), testString)
 	}
 
 	invalidStrings := mergeSlices(
@@ -146,14 +146,13 @@ func TestIsKebabCase(t *testing.T) {
 	)
 
 	for _, testString := range invalidStrings {
-		assert.False(t, IsKebabCase(testString), testString)
+		assert.False(t, gocc.IsKebabCase(testString), testString)
 	}
 }
 
 func TestIsDotNotation(t *testing.T) {
-
 	for _, testString := range testStringsDotNotation {
-		assert.True(t, IsDotNotation(testString), testString)
+		assert.True(t, gocc.IsDotNotation(testString), testString)
 	}
 
 	invalidStrings := mergeSlices(
@@ -167,17 +166,16 @@ func TestIsDotNotation(t *testing.T) {
 	)
 
 	for _, testString := range invalidStrings {
-		assert.False(t, IsDotNotation(testString), testString)
+		assert.False(t, gocc.IsDotNotation(testString), testString)
 	}
 }
 
 func TestIsCustomDelimiter(t *testing.T) {
-
 	templateString := "custom delimiter test"
 	for _, delimiter := range testCustomDelimiters {
 		testString := strings.ReplaceAll(templateString, " ", delimiter)
 		assert.True(t,
-			IsCustomDelimiter(testString, delimiter),
+			gocc.IsCustomDelimiter(testString, delimiter),
 			fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
 		)
 	}
@@ -196,7 +194,7 @@ func TestIsCustomDelimiter(t *testing.T) {
 	for _, delimiter := range testCustomDelimiters {
 		for _, testString := range invalidStrings {
 			assert.False(t,
-				IsCustomDelimiter(testString, delimiter),
+				gocc.IsCustomDelimiter(testString, delimiter),
 				fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
 			)
 		}
@@ -204,12 +202,11 @@ func TestIsCustomDelimiter(t *testing.T) {
 }
 
 func TestIsUpperCustomDelimiter(t *testing.T) {
-
 	templateString := "CUSTOM DELIMITER TEST"
 	for _, delimiter := range testCustomDelimiters {
 		testString := strings.ReplaceAll(templateString, " ", delimiter)
 		assert.True(t,
-			IsUpperCustomDelimiter(testString, delimiter),
+			gocc.IsUpperCustomDelimiter(testString, delimiter),
 			fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
 		)
 	}
@@ -228,7 +225,7 @@ func TestIsUpperCustomDelimiter(t *testing.T) {
 	for _, delimiter := range testCustomDelimiters {
 		for _, testString := range invalidStrings {
 			assert.False(t,
-				IsUpperCustomDelimiter(testString, delimiter),
+				gocc.IsUpperCustomDelimiter(testString, delimiter),
 				fmt.Sprintf("delimiter: %s | test string %s", delimiter, testString),
 			)
 		}
@@ -237,30 +234,30 @@ func TestIsUpperCustomDelimiter(t *testing.T) {
 
 func Benchmark_detectCaseStyle_SnakeCase(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		detectCaseStyle(testStringsSnakeCase[0])
+		gocc.DetectCaseStyle(testStringsSnakeCase[0])
 	}
 }
 
 func Benchmark_detectCaseStyle_KebabCase(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		detectCaseStyle(testStringsKebabCase[0])
+		gocc.DetectCaseStyle(testStringsKebabCase[0])
 	}
 }
 
 func Benchmark_detectCaseStyle_CamelCase(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		detectCaseStyle(testStringsCamelCase[0])
+		gocc.DetectCaseStyle(testStringsCamelCase[0])
 	}
 }
 
 func Benchmark_detectCaseStyle_PascalCase(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		detectCaseStyle(testStringsPascalCase[0])
+		gocc.DetectCaseStyle(testStringsPascalCase[0])
 	}
 }
 
 func Benchmark_detectCaseStyle_DotNotation(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		detectCaseStyle(testStringsDotNotation[0])
+		gocc.DetectCaseStyle(testStringsDotNotation[0])
 	}
 }

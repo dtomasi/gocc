@@ -1,12 +1,13 @@
-package gocc
+package gocc_test
 
 import (
 	"fmt"
+	"github.com/dtomasi/gocc"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-var testCustomDelimiters = []string{`|`, `*`, `+`, `?`, `^`, `$`, `/`, `\`}
+var testCustomDelimiters = []string{`|`, `*`, `+`, `?`, `^`, `$`, `/`, `\`} //nolint:gochecknoglobals
 
 func getAllTestStrings() []string {
 	return mergeSlices(
@@ -20,90 +21,88 @@ func getAllTestStrings() []string {
 
 func TestSConverter_ToSnakeCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsSnakeCase(C(testString).ToSnakeCase()), testString)
+		assert.True(t, gocc.IsSnakeCase(gocc.C(testString).ToSnakeCase()), testString)
 	}
 }
 
 func BenchmarkConverter_PascalCase_ToSnakeCase_with_style_detection(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		C(testStringsPascalCase[1]).ToSnakeCase()
+		gocc.C(testStringsPascalCase[1]).ToSnakeCase()
 	}
 }
 
 func BenchmarkConverter_PascalCase_ToSnakeCase_with_known_style(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		C(testStringsPascalCase[1]).Convert(StylePascalCase, StyleSnakeCase)
+		gocc.C(testStringsPascalCase[1]).Convert(gocc.StylePascalCase, gocc.StyleSnakeCase)
 	}
 }
 
 func BenchmarkConverter_CamelCase_ToSnakeCase_with_style_detection(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		C(testStringsCamelCase[1]).ToSnakeCase()
+		gocc.C(testStringsCamelCase[1]).ToSnakeCase()
 	}
 }
 
 func BenchmarkConverter_CamelCase_ToSnakeCase_with_known_style(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		C(testStringsCamelCase[1]).Convert(StyleCamelCase, StyleSnakeCase)
+		gocc.C(testStringsCamelCase[1]).Convert(gocc.StyleCamelCase, gocc.StyleSnakeCase)
 	}
 }
 
 func BenchmarkConverter_KebabCase_ToSnakeCase_with_style_detection(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		C(testStringsKebabCase[1]).ToSnakeCase()
+		gocc.C(testStringsKebabCase[1]).ToSnakeCase()
 	}
 }
 
 func BenchmarkConverter_KebabCase_ToSnakeCase_with_known_style(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		C(testStringsKebabCase[1]).Convert(StyleKebabCase, StyleSnakeCase)
+		gocc.C(testStringsKebabCase[1]).Convert(gocc.StyleKebabCase, gocc.StyleSnakeCase)
 	}
 }
 
-
 func BenchmarkConverter_DotNotation_ToSnakeCase_with_style_detection(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		C(testStringsDotNotation[1]).ToSnakeCase()
+		gocc.C(testStringsDotNotation[1]).ToSnakeCase()
 	}
 }
 
 func BenchmarkConverter_DotNotation_ToSnakeCase_with_known_style(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		C(testStringsDotNotation[1]).Convert(StyleDotNotation, StyleSnakeCase)
+		gocc.C(testStringsDotNotation[1]).Convert(gocc.StyleDotNotation, gocc.StyleSnakeCase)
 	}
 }
 
 func TestSConverter_ToPascalCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsPascalCase(C(testString).ToPascalCase()), testString)
+		assert.True(t, gocc.IsPascalCase(gocc.C(testString).ToPascalCase()), testString)
 	}
 }
 
 func TestSConverter_ToCamelCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsCamelCase(C(testString).ToCamelCase()), testString)
+		assert.True(t, gocc.IsCamelCase(gocc.C(testString).ToCamelCase()), testString)
 	}
 }
 
 func TestSConverter_ToKebabCase(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsKebabCase(C(testString).ToKebabCase()), testString)
+		assert.True(t, gocc.IsKebabCase(gocc.C(testString).ToKebabCase()), testString)
 	}
 }
 
 func TestSConverter_ToDotNotation(t *testing.T) {
 	for _, testString := range getAllTestStrings() {
-		assert.True(t, IsDotNotation(C(testString).ToDotNotation()), testString)
+		assert.True(t, gocc.IsDotNotation(gocc.C(testString).ToDotNotation()), testString)
 	}
 }
 
 func TestConverter_ToCustomDelimiter(t *testing.T) {
-
 	for _, delimiter := range testCustomDelimiters {
 		for _, testString := range getAllTestStrings() {
-			testResultString := C(testString).ToCustomDelimiter(delimiter)
+			testResultString := gocc.C(testString).ToCustomDelimiter(delimiter)
 			assert.True(t,
-				IsCustomDelimiter(
+				gocc.IsCustomDelimiter(
 					testResultString,
 					delimiter,
 				),
@@ -116,9 +115,9 @@ func TestConverter_ToCustomDelimiter(t *testing.T) {
 func TestConverter_ToUpperCustomDelimiter(t *testing.T) {
 	for _, delimiter := range testCustomDelimiters {
 		for _, testString := range getAllTestStrings() {
-			testResultString := C(testString).ToUpperCustomDelimiter(delimiter)
+			testResultString := gocc.C(testString).ToUpperCustomDelimiter(delimiter)
 			assert.True(t,
-				IsUpperCustomDelimiter(
+				gocc.IsUpperCustomDelimiter(
 					testResultString,
 					delimiter,
 				),

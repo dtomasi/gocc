@@ -3,9 +3,9 @@ package gocc
 import "strings"
 
 func toDotNotationFromCaseStyle(from CaseStyle, s string) string {
-
 	switch from {
-
+	case StyleUnknown, StyleDotNotation:
+		panic("cannot convert from StyleUnknown or same as input style")
 	case StylePascalCase, StyleCamelCase:
 		return pascalOrCamelCaseToDotNotation(s)
 	case StyleKebabCase:

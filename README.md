@@ -31,10 +31,10 @@ func func main() {
     // Using Convert function with known type is much faster than the example above,
     // because there is no need to detect the input type
     gocc.C("myCamelCaseString").Convert(gocc.StyleCamelCase, gocc.StyleSnakeCase)
-    
+
     // Validate strings -> returns true
     gocc.IsSnakeCase("my_snake_case_string")
-    
+
     // Case type checking -> returns StyleKebabCase (int)
     gocc.C("kebab-case-string").Style()
     // returns "kebab"

@@ -1,8 +1,9 @@
 package gocc
 
 func toCamelCaseFromCaseStyle(from CaseStyle, s string) string {
-
 	switch from {
+	case StyleUnknown, StyleCamelCase:
+		panic("cannot convert from StyleUnknown")
 	case StylePascalCase:
 		return lcFirst(s)
 	case StyleSnakeCase:

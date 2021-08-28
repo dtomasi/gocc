@@ -3,9 +3,9 @@ package gocc
 import "strings"
 
 func toSnakeCaseFromCaseStyle(from CaseStyle, s string) string {
-
 	switch from {
-
+	case StyleUnknown, StyleSnakeCase:
+		panic("cannot convert from StyleUnknown or same as input style")
 	case StylePascalCase, StyleCamelCase:
 		return pascalOrCamelCaseToSnakeCase(s)
 	case StyleKebabCase:
