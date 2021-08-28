@@ -1,5 +1,6 @@
 # gocc (Golang Case Converter)
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/dtomasi/gocc.svg)](https://pkg.go.dev/github.com/dtomasi/gocc)
 [![CodeFactor](https://www.codefactor.io/repository/github/dtomasi/gocc/badge)](https://www.codefactor.io/repository/github/dtomasi/di)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/dtomasi/gocc/main.svg)](https://results.pre-commit.ci/latest/github/dtomasi/gocc/main)
 ![Go Unit Tests](https://github.com/dtomasi/gocc/actions/workflows/build.yml/badge.svg)
