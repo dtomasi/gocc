@@ -1,11 +1,9 @@
 # gocc (Golang Case Converter)
 
-![Go Unit Tests](https://github.com/dtomasi/gocc/actions/workflows/go.yml/badge.svg)
-![Golang CI Lint](https://github.com/dtomasi/gocc/actions/workflows/golangci-lint.yml/badge.svg)
+[![CodeFactor](https://www.codefactor.io/repository/github/dtomasi/gocc/badge)](https://www.codefactor.io/repository/github/dtomasi/di)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/dtomasi/gocc/main.svg)](https://results.pre-commit.ci/latest/github/dtomasi/gocc/main)
+![Go Unit Tests](https://github.com/dtomasi/gocc/actions/workflows/build.yml/badge.svg)
 ![CodeQL](https://github.com/dtomasi/gocc/actions/workflows/codeql-analysis.yml/badge.svg)
-
-[![CodeFactor](https://www.codefactor.io/repository/github/dtomasi/gocc/badge)](https://www.codefactor.io/repository/github/dtomasi/gocc)
-
 
 ## Documentation
 
