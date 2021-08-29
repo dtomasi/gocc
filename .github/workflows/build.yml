@@ -52,6 +52,7 @@ jobs:
       - name: Run coverage
         run: |
           go get -u github.com/ory/go-acc
+          go mod vendor
           $(go env GOPATH)/bin/go-acc ./...
       - name: Upload coverage to Codecov
         run: |
