@@ -49,7 +49,7 @@ jobs:
           go-version: '1.16.x'
       - name: Run coverage
         run: |
-          export PATH=${PATH}:`go env GOPATH`/bin
+          export PATH=${PATH}:$(go env GOPATH)/bin
           go get github.com/ory/go-acc
           go-acc ./...
       - name: Upload coverage to Codecov
