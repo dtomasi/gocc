@@ -47,15 +47,17 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '1.16.x'
-      - name: Install go-acc
-        run: go get -u github.com/ory/go-acc
-      - name: Run coverage
-        run: go-acc ./...
-      - name: Upload coverage to Codecov
-        run: |
-          curl -Os https://uploader.codecov.io/latest/linux/codecov
-          chmod +x codecov
-          ./codecov -t ${{ secrets.CODECOV_TOKEN }}
+      - name: List
+        run: go list -mod=mod all
+#      - name: Run coverage
+#        run: |
+#          go get -u github.com/ory/go-acc
+#          $(go env GOPATH)/bin/go-acc ./...
+#      - name: Upload coverage to Codecov
+#        run: |
+#          curl -Os https://uploader.codecov.io/latest/linux/codecov
+#          chmod +x codecov
+#          ./codecov -t ${{ secrets.CODECOV_TOKEN }}
   test:
     strategy:
       matrix:
