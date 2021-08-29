@@ -5,6 +5,7 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/dtomasi/gocc/main.svg)](https://results.pre-commit.ci/latest/github/dtomasi/gocc/main)
 ![Go Unit Tests](https://github.com/dtomasi/gocc/actions/workflows/build.yml/badge.svg)
 ![CodeQL](https://github.com/dtomasi/gocc/actions/workflows/codeql-analysis.yml/badge.svg)
+[![codecov](https://codecov.io/gh/dtomasi/gocc/branch/main/graph/badge.svg?token=8U7ZY6DB8P)](https://codecov.io/gh/dtomasi/gocc)
 
 ## Documentation
 
