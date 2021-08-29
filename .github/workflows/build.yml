@@ -50,7 +50,7 @@ jobs:
       - name: Install go-acc
         run: go get github.com/ory/go-acc
       - name: Run coverage
-        run: go-acc ./...
+        run: $(go env GOPATH)/bin/go-acc ./...
       - name: Upload coverage to Codecov
         run: |
           curl -Os https://uploader.codecov.io/latest/linux/codecov
