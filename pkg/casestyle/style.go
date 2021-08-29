@@ -1,10 +1,9 @@
-package gocc
+package casestyle
 
 type CaseStyle int
 
 const (
-	StyleUnknown CaseStyle = iota
-	StylePascalCase
+	StylePascalCase CaseStyle = iota
 	StyleCamelCase
 	StyleSnakeCase
 	StyleKebabCase
@@ -12,7 +11,6 @@ const (
 )
 
 var styleStringMap = []string{
-	"unknown",
 	"pascal",
 	"camel",
 	"snake",
@@ -21,5 +19,9 @@ var styleStringMap = []string{
 }
 
 func (cs CaseStyle) String() string {
+	if int(cs) > len(styleStringMap) || int(cs) < 0 {
+		return "UNKNOWN"
+	}
+
 	return styleStringMap[cs]
 }
